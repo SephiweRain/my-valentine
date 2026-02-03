@@ -1,8 +1,8 @@
-<!<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
   <title>Will You Be My Valentine Forever? 💞</title>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
   <style>
@@ -33,6 +33,7 @@
 
     .container {
       max-width: 95%;
+      padding: 1rem;
       z-index: 10;
       position: relative;
     }
@@ -148,12 +149,77 @@
       opacity: 1;
       transform: translateY(0);
     }
+
+    /* ────────────────────────────────────────────────
+       MOBILE RESPONSIVE STYLES
+    ──────────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 3.5rem;
+        margin: 0.5rem 0;
+      }
+
+      p.intro {
+        font-size: 1.4rem;
+      }
+
+      h2.question {
+        font-size: 2.8rem;
+        margin: 2rem 0 1.5rem;
+      }
+
+      button {
+        font-size: 1.6rem;
+        padding: 0.8rem 2.5rem;
+        margin: 1rem 0.5rem;
+      }
+
+      .heart {
+        font-size: 1.8rem;
+        animation-duration: 10s linear infinite;
+      }
+
+      .container {
+        padding: 1rem;
+        max-width: 95%;
+      }
+
+      #message {
+        font-size: 2rem;
+      }
+
+      body {
+        overflow-y: auto;
+      }
+
+      @keyframes float {
+        0% { transform: translateY(120vh) rotate(0deg) scale(0.4); }
+        100% { transform: translateY(-30vh) rotate(720deg) scale(0.8); }
+      }
+
+      @keyframes pulseGlow {
+        0% { transform: scale(0.95); }
+        100% { transform: scale(1.05); }
+      }
+
+      #noBtn {
+        position: static !important;
+        transform: none;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 { font-size: 2.8rem; }
+      h2.question { font-size: 2.2rem; }
+      button { font-size: 1.4rem; padding: 0.7rem 2rem; }
+      .heart { font-size: 1.5rem; }
+    }
   </style>
 </head>
 <body>
 
   <div class="container">
-    <h1>My baby💖</h1>
+    <h1>My baby baby 💖✨</h1>
     <p class="intro">Every beat of my heart whispers your name...</p>
     <h2 class="question">Will you be my Valentine... forever? 🌹</h2>
 
@@ -198,7 +264,6 @@
       document.getElementById('yesBtn').style.display = 'none';
       document.getElementById('noBtn').style.display = 'none';
 
-      // Big burst
       confetti({
         particleCount: 300,
         spread: 120,
@@ -206,33 +271,49 @@
         colors: ['#ff4757', '#ff6b81', '#ffeb3b', '#2ed573', '#1e90ff']
       });
 
-      // Heart rain
       shootHearts();
     });
 
-    // Runaway No button (even harder to catch now)
+    // Runaway No button - only on desktop
     const noBtn = document.getElementById('noBtn');
     noBtn.addEventListener('mouseover', () => {
-      const x = Math.random() * (window.innerWidth - 300) + 100;
-      const y = Math.random() * (window.innerHeight - 300) + 100;
-      noBtn.style.position = 'absolute';
-      noBtn.style.left = x + 'px';
-      noBtn.style.top = y + 'px';
+      if (window.innerWidth > 768) {
+        const x = Math.random() * (window.innerWidth - 300) + 100;
+        const y = Math.random() * (window.innerHeight - 300) + 100;
+        noBtn.style.position = 'absolute';
+        noBtn.style.left = x + 'px';
+        noBtn.style.top = y + 'px';
+      }
     });
 
-    // More dramatic floating hearts (multi-color, varied sizes)
+    // Floating hearts - adjusted for mobile
     function createHeart() {
       const heart = document.createElement('div');
       heart.classList.add('heart');
       heart.innerHTML = Math.random() > 0.5 ? '❤️' : '💖';
       heart.style.left = Math.random() * 100 + 'vw';
-      heart.style.animationDuration = (Math.random() * 8 + 8) + 's';
-      heart.style.fontSize = (Math.random() * 3 + 1.5) + 'rem';
-      heart.style.opacity = Math.random() * 0.4 + 0.5;
+
+      let size = (Math.random() * 2 + 1) + 'rem';
+      let duration = (Math.random() * 8 + 8) + 's';
+      let opacity = 0.9;
+
+      if (window.innerWidth < 768) {
+        size = (Math.random() * 1.5 + 1) + 'rem';
+        opacity = 0.7;
+        duration = (Math.random() * 6 + 8) + 's'; // slightly faster but smaller
+      }
+
+      heart.style.fontSize = size;
+      heart.style.animationDuration = duration;
+      heart.style.opacity = opacity;
+
       document.body.appendChild(heart);
       setTimeout(() => heart.remove(), 15000);
     }
-    setInterval(createHeart, 300);
+
+    // Fewer hearts on mobile for performance
+    const heartInterval = window.innerWidth < 768 ? 600 : 300;
+    setInterval(createHeart, heartInterval);
   </script>
 
 </body>
