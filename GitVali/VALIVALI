@@ -1,0 +1,239 @@
+<!<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Will You Be My Valentine Forever? 💞</title>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(-45deg, #ff6b6b, #ff8e53, #ff4757, #ff9a9e);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+      color: #fff;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at center, transparent 40%, rgba(0,0,0,0.4) 100%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .container {
+      max-width: 95%;
+      z-index: 10;
+      position: relative;
+    }
+
+    h1 {
+      font-size: 5rem;
+      margin: 0.5rem 0;
+      text-shadow: 0 0 30px rgba(255, 105, 180, 0.9), 0 0 60px rgba(255, 20, 147, 0.7);
+      animation: pulseGlow 3s infinite alternate;
+      letter-spacing: 2px;
+    }
+
+    p.intro {
+      font-size: 2.2rem;
+      margin: 1.5rem 0;
+      opacity: 0;
+      animation: fadeIn 2s forwards 1s;
+    }
+
+    h2.question {
+      font-size: 4.5rem;
+      margin: 3rem 0 2rem;
+      text-shadow: 4px 4px 20px rgba(0,0,0,0.5);
+      animation: heartbeat 2.5s infinite;
+    }
+
+    .buttons {
+      margin-top: 3rem;
+    }
+
+    button {
+      font-size: 2.2rem;
+      padding: 1.2rem 4rem;
+      margin: 1.5rem;
+      border: none;
+      border-radius: 60px;
+      cursor: pointer;
+      transition: all 0.4s ease;
+      box-shadow: 0 12px 25px rgba(0,0,0,0.3);
+    }
+
+    #yesBtn {
+      background: linear-gradient(45deg, #ff3366, #ff4d4d);
+      color: white;
+      animation: beat 1.8s infinite;
+    }
+
+    #yesBtn:hover {
+      transform: scale(1.25) rotate(5deg);
+      box-shadow: 0 0 40px #ff3366;
+    }
+
+    #noBtn {
+      background: #2f3542;
+      color: white;
+      position: relative;
+    }
+
+    #noBtn:hover {
+      background: #57606f;
+    }
+
+    .heart {
+      position: absolute;
+      font-size: 3rem;
+      user-select: none;
+      pointer-events: none;
+      animation: float 12s linear infinite;
+      opacity: 0.9;
+      text-shadow: 0 0 15px rgba(255, 105, 180, 0.8);
+    }
+
+    @keyframes float {
+      0% { transform: translateY(120vh) rotate(0deg) scale(0.5); }
+      100% { transform: translateY(-30vh) rotate(720deg) scale(1.2); }
+    }
+
+    @keyframes pulseGlow {
+      0% { transform: scale(1); text-shadow: 0 0 20px #ff69b4; }
+      100% { transform: scale(1.1); text-shadow: 0 0 60px #ff1493, 0 0 100px #ff69b4; }
+    }
+
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.12); }
+    }
+
+    @keyframes beat {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    #message {
+      font-size: 3rem;
+      margin-top: 3rem;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 1.5s ease;
+      text-shadow: 0 0 30px #ff3366;
+    }
+
+    #message.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>My baby💖</h1>
+    <p class="intro">Every beat of my heart whispers your name...</p>
+    <h2 class="question">Will you be my Valentine... forever? 🌹</h2>
+
+    <div class="buttons">
+      <button id="yesBtn">Yes, forever! 💞</button>
+      <button id="noBtn">No... 😭</button>
+    </div>
+
+    <div id="message">My heart is exploding with joy! 😍<br>I love you more than words can say... forever yours! 💍✨</div>
+  </div>
+
+  <script>
+    // Dramatic confetti with hearts
+    function shootHearts() {
+      const end = Date.now() + 4000;
+      (function frame() {
+        confetti({
+          particleCount: 6,
+          angle: 60,
+          spread: 55,
+          origin: { x: 0 },
+          shapes: ['heart'],
+          colors: ['#ff4757', '#ff6b81', '#ffa502', '#1e90ff']
+        });
+        confetti({
+          particleCount: 6,
+          angle: 120,
+          spread: 55,
+          origin: { x: 1 },
+          shapes: ['heart'],
+          colors: ['#ff4757', '#ff6b81', '#ffa502', '#1e90ff']
+        });
+
+        if (Date.now() < end) {
+          requestAnimationFrame(frame);
+        }
+      }());
+    }
+
+    document.getElementById('yesBtn').addEventListener('click', () => {
+      document.getElementById('message').classList.add('visible');
+      document.getElementById('yesBtn').style.display = 'none';
+      document.getElementById('noBtn').style.display = 'none';
+
+      // Big burst
+      confetti({
+        particleCount: 300,
+        spread: 120,
+        origin: { y: 0.6 },
+        colors: ['#ff4757', '#ff6b81', '#ffeb3b', '#2ed573', '#1e90ff']
+      });
+
+      // Heart rain
+      shootHearts();
+    });
+
+    // Runaway No button (even harder to catch now)
+    const noBtn = document.getElementById('noBtn');
+    noBtn.addEventListener('mouseover', () => {
+      const x = Math.random() * (window.innerWidth - 300) + 100;
+      const y = Math.random() * (window.innerHeight - 300) + 100;
+      noBtn.style.position = 'absolute';
+      noBtn.style.left = x + 'px';
+      noBtn.style.top = y + 'px';
+    });
+
+    // More dramatic floating hearts (multi-color, varied sizes)
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.innerHTML = Math.random() > 0.5 ? '❤️' : '💖';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = (Math.random() * 8 + 8) + 's';
+      heart.style.fontSize = (Math.random() * 3 + 1.5) + 'rem';
+      heart.style.opacity = Math.random() * 0.4 + 0.5;
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 15000);
+    }
+    setInterval(createHeart, 300);
+  </script>
+
+</body>
+</html>
